@@ -1,6 +1,8 @@
+console.log(`APP start`);
 
 function initLogger() {
     global.plog = require('./lib/global/log.js').createAppLogger();
+    plog.info(`Logger Setup OK`)
 }
 
 function loadKoaApp() {
@@ -20,6 +22,14 @@ function loadConfig() {
         for (let k in config) {
             config_default[k] = config[k];
             plog.info("Overload config: " + k);
+        }
+    }
+
+    if (fs.existsSync('/config/config.js')) {
+        let config = require('/config/config.js');
+        for (let k in config) {
+            config_default[k] = config[k];
+            plog.info(`Overload GoogleCloudRun config: ${k}`);
         }
     }
 }
